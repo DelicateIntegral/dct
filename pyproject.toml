@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "dct"
+version = "0.6.8"
+description = "Tool to process ICC jsons in variety of ways"
+authors = ["DelicateIntegral"]
+license = "AGPLv3+"
+readme = "README.md"
+packages = [{include = "dct"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiohttp = {extras = ["speedups"], version = "^3.9.5"}
+pillow = "^10.4.0"
+pillow-avif-plugin = "^1.4.4"
+pyyaml = "^6.0.1"
+rich = "^13.7.1"
+asyncio = "^3.4.3"
+argparse = "^1.4.0"
+brotlicffi = "^1.1.0.0"
+zstandard = "^0.23.0"
+
+[tool.poetry.urls]
+"Repository" = "https://github.com/DelicateIntegral/dct"
+
+[tool.poetry.scripts]
+dct = "dct.core:run_main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

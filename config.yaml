@@ -1,0 +1,34 @@
+# BELOW ALL PARAMETERS ARE IN DISABLED STATE
+# UN-COMMENT PARAMETERS (DELETE THE # BEFORE THEM) TO ENABLE THEM
+# IF YOU WANT PARAMETERS TO HAVE DEFAULT VALUES, KEEP THEM DISABLED
+
+# Values in INPUT_DIRECTORY and OUTPUT_DIRECTORY are just placeholders, actual current working directory
+# will only be calculated if you keep them disabled.
+
+# -----------------CONFIGURATION PARAMETERS (TOTAL 25)----------------
+
+# INPUT_DIRECTORY: "Current Working Directory"
+# OUTPUT_DIRECTORY: "Current Working Directory"
+# PROCESS_DISCORD_LINKS: False
+# TOKEN: "YOUR TOKEN"
+# PROJECT_FILE: "project.json"
+# PROJECT_URL: ""
+# OUTPUT_FILE: "project_new.json"
+# IMAGE_FOLDER: "images"
+# CONVERT_IMAGES: False
+# IMAGE_QUALITY: 90
+# IMAGE_FORMAT: "WEBP"
+# UPDATE_PREFIXES: False
+# OLD_PREFIX: ""
+# NEW_PREFIX: ""
+# MINIFY: False
+# RATE_LIMIT: 2
+# BASE64_TO_IMAGE: False
+# DOWNLOAD_IMAGES: False
+# OVERWRITE_IMAGES: False
+# DISABLE_IMAGES: False
+# SHOW_CONFIG: False
+# DOWNLOAD_RATE_LIMIT: 5
+# IMAGE_TO_BASE64: False
+# SESSION_TIMEOUT: 600
+# LOG_FILE: "dct_log"
