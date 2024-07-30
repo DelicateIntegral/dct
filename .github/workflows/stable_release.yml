@@ -1,0 +1,133 @@
+name: Stable Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*-stable'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
+        pip install --upgrade importlib_resources
+
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --clean -y --dist dist/${{ matrix.os }} cyoatools.spec
+
+    - name: Archive dist folder
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist-${{ matrix.os }}
+        path: dist/${{ matrix.os }}
+
+    - name: Archive yaml file
+      uses: actions/upload-artifact@v2
+      with:
+        name: config-yaml
+        path: config.yaml
+
+    - name: Archive markdown file
+      uses: actions/upload-artifact@v2
+      with:
+        name: readme-md
+        path: README.md
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download Linux artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: dist-ubuntu-latest
+        path: dist
+
+    - name: Download Windows artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: dist-windows-latest
+        path: dist
+
+    - name: Download yaml file
+      uses: actions/download-artifact@v2
+      with:
+        name: config-yaml
+        path: dist
+
+    - name: Download markdown file
+      uses: actions/download-artifact@v2
+      with:
+        name: readme-md
+        path: dist
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Linux executable to release
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/cyoatools
+        asset_name: cyoatools_linux_${{ github.ref_name }}
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows executable to release
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/cyoatools.exe
+        asset_name: cyoatools_windows_${{ github.ref_name }}.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload yaml file to release
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/config.yaml
+        asset_name: config_${{ github.ref_name }}.yaml
+        asset_content_type: application/yaml
+
+    - name: Upload markdown file to release
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/README.md
+        asset_name: readme_${{ github.ref_name }}.md
+        asset_content_type: text/markdwon
