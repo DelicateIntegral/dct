@@ -30,7 +30,7 @@ jobs:
 
     - name: Build with PyInstaller
       run: |
-        pyinstaller --clean -y --dist dist/${{ matrix.os }} cyoatools.spec
+        pyinstaller --clean -y --dist dist/${{ matrix.os }} dct.spec
 
     - name: Archive dist folder
       uses: actions/upload-artifact@v2
@@ -98,8 +98,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: dist/cyoatools
-        asset_name: cyoatools_linux_${{ github.ref_name }}
+        asset_path: dist/dct
+        asset_name: dct_linux_${{ github.ref_name }}
         asset_content_type: application/octet-stream
 
     - name: Upload Windows executable to release
@@ -108,8 +108,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: dist/cyoatools.exe
-        asset_name: cyoatools_windows_${{ github.ref_name }}.exe
+        asset_path: dist/dct.exe
+        asset_name: dct_windows_${{ github.ref_name }}.exe
         asset_content_type: application/octet-stream
 
     - name: Upload yaml file to release
