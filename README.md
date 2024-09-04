@@ -2,63 +2,85 @@
 
 `dct` is a Python package designed for processing ICC JSON files in a variety of ways.
 
-**NOTE**:
+> [!NOTE]
+> To use `dct`, you need to provide a configuration YAML file.
+> Sample config.yaml with all parameters with sample values: [config.yaml](config.yaml).
+> There is also a sample config with all parameters that you can copy in config example section.
 
-To use `dct`, you need to provide a configuration YAML file.
+> [!IMPORTANT]
+> See the [Configuration Parameters](#configuration-parameters) and [Config Examples](#config-examples-non-exhaustive-list) sections below to get detailed explanations.
 
-Sample config.yaml with all parameters with sample values: [config.yaml](config.yaml).
-
-There is also a sample config with all parameters that you can copy in config example section.
-
-**See the `usage`, `configuration parameters` and `config examples` sections below to get detailed explanations.**
+> [!TIP]
+> 
 
 ## Table of Contents
 
+<details open>
+<summary> Expand Section </summary>
+
 1. [Downloading `dct` without Installing](#downloading-dct-without-installing)
 2. [Installing](#installing)
-3. [Usage](#usage)
-4. [Configuration Parameters](#configuration-parameters)
-5. [Config Examples (non-exhaustive list)](#config-examples-non-exhaustive-list)
+3. [Configuration Parameters](#configuration-parameters)
+4. [Config Examples (non-exhaustive list)](#config-examples-non-exhaustive-list)
+5. [Screenshots](#screenshots)
+
+</details>
 
 ## Downloading `dct` without Installing
 
 Download the corresponding executable for you platform from [Latest Github Release](https://github.com/DelicateIntegral/dct/releases/latest)
 
-**For windows**: grab the dct_windows.exe binary file from above release link.
+<details>
+<summary> Windows </summary>
 
-**For linux**: grab the dct_linux binary file from above release link.
+- Go to the above release link.
+- Check the Assets section (example screenshot of `v0.6.8-aplha` release):
+![v0.6.8-alpha](image.png)
+- Grab the `dct_windows_{tag}.exe` file.
+- Also grab the yaml and readme files as they would have the correct config parameters and their info matching that release version.
+- Create a yaml file (for eg: `delicateworm.yaml`).
+- Copy the parameters from the yaml you downloaded into this new one.
+- Enable the parameters that you want to change, give them suitable values (read `readme`).
+- Run the program. Give the path where your yaml files are stored. Select the yaml that you want to use.
 
-### Running
+> [!WARNING]
+> Make sure you give double `\\` in paths instead of single `\` if you are changing `INPUT_DIRECTORY` or `OUTPUT_DIRECTORY` in the configuration files.
+> Correct: `D:\\my awesome folder\\subfolder of downloads\\cyoa tools`
+> Incorrect: `D:\my awesome folder\subfolder of downloads\cyoa tools`
 
-Make sure that the binary file has permission to be executable.
+</details>
 
-**Windows**:
-Double click to run. Give path where your configuration files are, select the one you want to use.
+<details>
+<summary> Linux </summary>
 
-Make sure you give double `\\` in paths instead of single `\` if you are changing `INPUT_DIRECTORY` or `OUTPUT_DIRECTORY` in the configuration files.
+- Go to the above release link.
+- Check the Assets section (example screenshot of `v0.6.8-aplha` release):
+![v0.6.8-alpha](image.png)
+- Grab the binary file `dct_linux_{tag}`.
+- Also grab the yaml and readme files as they would have the correct config parameters and their info matching that release.
+- Create a yaml file (for eg: `delicateworm.yaml`).
+- Copy the parameters from the yaml you downloaded into this new one.
+- Enable the parameters that you want to change, give them suitable values (read `readme`).
+- Run the program. Give the path where your yaml files are stored. Select the yaml that you want to use.
 
-Correct:
-`D:\\my awesome folder\\subfolder of downloads\\cyoa tools`
+> [!WARNING]
+> Binaries/scripts many times are not executable in linux due to insufficient permission. Run this command to give executing permission to binary:
+>
+>    ```bash
+>    chmod +x path/to/the/downloaded/dct_linux_{tag}
+>    ```
+> After doing this you can run the binary with this command in terminal:
+>
+>    ```bash
+>    ./dct_linux_{tag}
+>    ```
 
-Incorrect: `D:\my awesome folder\subfolder of downloads\cyoa tools`
-
-**Linux**:
-
-Binaries/scripts many times are not executable in linux due to insufficient permission. run this command to give executing permission to binary:
-
-```bash
-chmod +x path/to/the/downloaded/dct_linux
-```
-
-After doing this you can run the binary with this command in terminal:
-
-```bash
-./dct_linux
-```
-
-Give path where your configuration files are, select the one you want to use.
+</details>
 
 ## Installing
+
+<details>
+<summary> Expand Section </summary>
 
 As `dct` is a python package that uses poetry for package build/dependency/install, you can easily install it yourself by cloning the repo and running the commands below.
 
@@ -109,18 +131,12 @@ Script will ask you to enter the `Install_Path` and will do this steps if path p
 
 **NOTE: It is recommended to install the package with poetry or install script as `pyinstaller` can behave or give errors in different environments.**
 
-## Usage
+</details>
 
-**You can skip this if you are not interested in using the `dct` from terminal/cmd with custom config path and name without using the manual selection mode that was added in `v0.6.6`.**
+## Configuration Parameters
 
-**Running with config parameter in terminal:**
-
-```bash
-# if you are using the python package directly in terminal (assuming you have already activated environment if you use one)
-dct --config="path/to/your/custom.yaml"
-```
-
-### Configuration Parameters
+<details>
+<summary> Expand Section </summary>
 
 **Below listed are the valid parameters that you can define in the config file.**
 
@@ -141,7 +157,7 @@ dct --config="path/to/your/custom.yaml"
 - **`NEW_PREFIX`**: Optional. Default is `""`. The new prefix to prepend to updated image URLs. Leave blank if you are uploading `IMAGE_FOLDER` to Neocities or GitHub in the same directory as `index.html`.
 - **`MINIFY`**: Optional. Default is `False`. Set to `True` to minify the output JSON file.
 - **`RATE_LIMIT`**: Optional. Default is `2`. The maximum number of concurrent requests allowed for Discord URL refresh operations. Recommended to skip this option in the config and leave it at default value.
-- **`BASE64_TO_IMAGE`**: Optional. Default is `False`. If set to `True`, it will process base64 encoded images in the JSON, converting them to webp and storing to `IMAGE_FOLDER` and updating links like this: `IMAGE_FOLDER/image_name`.  You can provide `NEW_PREFIX` and set `UPDATE_PREFIXES` to `True` to update links to this: `NEW_PREFIX/IMAGE_FOLDER/image_name`.
+- **`BASE64_TO_IMAGE`**: Optional. Default is `False`. If set to `True`, it will process base64 encoded images in the JSON, converting them to webp and storing to `IMAGE_FOLDER` and updating links like this: `IMAGE_FOLDER/image_name`. You can provide `NEW_PREFIX` and set `UPDATE_PREFIXES` to `True` to update links to this: `NEW_PREFIX/IMAGE_FOLDER/image_name`.
 - **`DOWNLOAD_IMAGES`**: Optional. Default is `False`. If set to `True`, it will download images linked in the JSON to `IMAGE_FOLDER` and updating links like this: `IMAGE_FOLDER/image_name`. You can provide `NEW_PREFIX` and set `UPDATE_PREFIXES` to `True` to update links to this: `NEW_PREFIX/IMAGE_FOLDER/image_name`.
 - **`OVERWRITE_IMAGES`**: Optional. Default is `False`. If set to `True`, it will overwrite existing images in `IMAGE_FOLDER` otherwise skip pre-existing webp images.
 - **`DISABLE_IMAGES`**: Optional. Default is `False`. If set to `True`, it will disable all images in "image" (backgrounds etc are not affected) in the JSON and exit.
@@ -152,7 +168,7 @@ dct --config="path/to/your/custom.yaml"
 - **`SESSION_TIMEOUT`**: Optional. Default value is `600`. This is amount of seconds for total session when downloading.
 - **`LOG_FILE`**: Optional. Default value is `dct_log`. Name of the log file that is written in the `OUTPUT_DIRECTORY`.
 
-### Priority order of parameters (decides which parameter is processed first):
+### Priority order of parameters (decides which parameter is processed first)
 
 1. `INPUT_DIRECTORY` and `OUTPUT_DIRECTORY` (The program continues after this.)
 2. `PROJECT_FILE` or `PROJECT_URL` (The program continues after this.)
@@ -160,8 +176,8 @@ dct --config="path/to/your/custom.yaml"
 4. `DISABLES_IMAGES` (The program exits after processing this.)
 5. `IMAGE_FOLDER` (The program continues after this.)
 6. `PROCESS_DISCORD_LINKS` (Uses these parameters: `DOWNLOAD_IMAGES, TOKEN, OVERWRITE_IMAGES, RATE_LIMIT, IMAGE_FOLDER, IMAGE_QUALITY, DOWNLOAD_RATE_LIMIT, IMAGE_FORMAT, CONVERT_IMAGES`) (The program continues after this.)
-    1. `TOKEN` (uses: `RATE_LIMIT`)
-    2. `DOWNLOAD_IMAGES` (uses: `OVERWRITE_IMAGES, IMAGE_FOLDER, DOWNLOAD_RATE_LIMIT, CONVERT_IMAGES` (`CONVERT_IMAGES` uses `IMAGE_QUALITY, IMAGE_FORMAT`))
+   1. `TOKEN` (uses: `RATE_LIMIT`)
+   2. `DOWNLOAD_IMAGES` (uses: `OVERWRITE_IMAGES, IMAGE_FOLDER, DOWNLOAD_RATE_LIMIT, CONVERT_IMAGES` (`CONVERT_IMAGES` uses `IMAGE_QUALITY, IMAGE_FORMAT`))
 7. `BASE64_TO_IMAGE` (Uses these parameters: `IMAGE_FOLDER, IMAGE_QUALITY, OVERWRITE_IMAGES, IMAGE_FORMAT, CONVERT_IMAGES`) (The program continues after this.)
 8. `DOWNLOAD_IMAGES` (This parameter is processed again as it downloads the other image urls that are not discord in this step. Uses these parameters: `IMAGE_QUALITY, IMAGE_FOLDER, OVERWRITE_IMAGES, DOWNLOAD_RATE_LIMIT, IMAGE_FORMAT, CONVERT_IMAGES`) (The program continues after this.)
 9. `IMAGE_TO_BASE64` (Will be skipped if `BASE64_TO_IMAGE` is also on and will show you a warning while skipping. Uses these parameters: `IMAGE_FOLDER, OUTPUT_PATH, MINIFY`) (The program exits after processing this parameter, if it is skipped, the program continues.)
@@ -170,7 +186,7 @@ dct --config="path/to/your/custom.yaml"
 
 **This priority helps in deciding the combinations of tasks that you can do together. Any task combinations would work correctly if the parameters that exit the program are the lowest priority or if nothing left to do.**
 
-### Config Examples (non-exhaustive list)
+## Config Examples (non-exhaustive list)
 
 **Sample Config with all parameters**:
 
@@ -216,61 +232,61 @@ LOG_FILE: str = "dct_log"
 
 1. You want to process discord urls so that the json has refreshed discord urls. Change the value of token with your actual BOT TOKEN. You can see this link to understand how to get discord BOT TOKEN: [Getting BOT TOKEN](https://discordgsm.com/guide/how-to-get-a-discord-bot-token)
 
-    ```yaml
-    PROCESS_DISCORD_LINKS: True
-    TOKEN: "example discord bot token string"
-    ```
+   ```yaml
+   PROCESS_DISCORD_LINKS: True
+   TOKEN: "example discord bot token string"
+   ```
 
 2. You want to convert the urls (other than discord) to local links and download images in a folder with a custom name `CyoaImages` for the folder.
 
-    ```yaml
-    IMAGE_FOLDER: "CyoaImages"
-    DOWNLOAD_IMAGES: True
-    ```
+   ```yaml
+   IMAGE_FOLDER: "CyoaImages"
+   DOWNLOAD_IMAGES: True
+   ```
 
 3. You want to convert all urls (including discord) like in point 2.
 
-    ```yaml
-    PROCESS_DISCORD_LINKS: True
-    TOKEN: "example discord bot token string"
-    IMAGE_FOLDER: "CyoaImages"
-    DOWNLOAD_IMAGES: True
-    ```
+   ```yaml
+   PROCESS_DISCORD_LINKS: True
+   TOKEN: "example discord bot token string"
+   IMAGE_FOLDER: "CyoaImages"
+   DOWNLOAD_IMAGES: True
+   ```
 
 4. You want to disable all images (base64, local linked, urls).
 
-    ```yaml
-    DISABLE_IMAGES: True
-    ```
+   ```yaml
+   DISABLE_IMAGES: True
+   ```
 
 5. You want to convert base64 embedded images to local links and download them like in step 2.
 
-    ```yaml
-    IMAGE_FOLDER: "CyoaImages"
-    BASE64_TO_IMAGE: True
-    ```
+   ```yaml
+   IMAGE_FOLDER: "CyoaImages"
+   BASE64_TO_IMAGE: True
+   ```
 
 6. You want to convert local links to new urls. Let's say you have folder `CyoaImages` in a server with url : `https://example.com/alsdkfjklsd/lksdfj/CyoaImages`.
 
-    ```yaml
-    NEW_PREFIX: "https://example.com/alsdkfjklsd/lksdfj/"
-    UPDATE_PREFIXES: True
-    ```
+   ```yaml
+   NEW_PREFIX: "https://example.com/alsdkfjklsd/lksdfj/"
+   UPDATE_PREFIXES: True
+   ```
 
 7. You already have urls in json but you want to move the image folder to new server.
 
-    ```yaml
-    OLD_PREFIX: "https://oldexample.com/oldalkdjfkajf/oldflakjdflkf/lsllk/"
-    NEW_PREFIX: "https://example.com/alsdkfjklsd/lksdfj/"
-    UPDATE_PREFIXES: True
-    ```
+   ```yaml
+   OLD_PREFIX: "https://oldexample.com/oldalkdjfkajf/oldflakjdflkf/lsllk/"
+   NEW_PREFIX: "https://example.com/alsdkfjklsd/lksdfj/"
+   UPDATE_PREFIXES: True
+   ```
 
 **You can also combine some tasks with each other like below (see the Priority order in [Configuration Parameters](#configuration-parameters) to get idea on how to create valid combination of tasks):**
 
-#### Screenshots for combination of 1+2+3+5
+</details>
 
-![alt text](images/scr001.png)
+## Screenshots
 
-![alt text](images/scr002.png)
+![dct_screenshot](images/image.png)
 
 **Note: Colors may vary due to terminal color settings.**
